@@ -24,6 +24,9 @@ class Instructor extends Person {
   grade(student, subject){
     return `${student.name} receives a perfect score on ${subject}`;
   };
+  testGrade(student, grade){
+    return student.grade = student.grade + Math.round(Math.random()*29.4);
+  };
 };
 
 class Student extends Person {
@@ -32,6 +35,7 @@ class Student extends Person {
     this.previousBackground = attrs.previousBackground;
     this.className = attrs.className;
     this.favSubjects = attrs.favSubjects;
+    this.grade = 0;
   };
   listsSubjects(){
     for (let i = 0; i < this.favSubjects.length; i++){
@@ -43,6 +47,13 @@ class Student extends Person {
   };
   SprintChallenge(subject){
     return `${this.name} has begun sprint challenge on ${subject}.`;
+  };
+  graduate(){
+    if(this.grade >= 70){
+      return `${this.name} can Graduate!!!!`;
+    }else{
+      return `${this.name} keep working at it!`;
+    };
   };
 };
 
@@ -101,3 +112,15 @@ console.log(jor.demo('JS IV'));
 console.log(jor.grade(kyle, 'JS IV'));
 console.log(jor.standUp('WEB25_jor'));
 console.log(jor.debugCode(kyle, 'JS IV'));
+jor.testGrade(kyle, 100);
+console.log(kyle.grade);
+console.log(kyle.graduate());
+jor.testGrade(kyle, 100);
+console.log(kyle.grade);
+console.log(kyle.graduate());
+jor.testGrade(kyle, 100);
+console.log(kyle.grade);
+console.log(kyle.graduate());
+jor.testGrade(kyle, 100);
+console.log(kyle.grade);
+console.log(kyle.graduate());
