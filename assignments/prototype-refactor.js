@@ -7,3 +7,181 @@ Prototype Refactor
 2. Your goal is to refactor all of this code to use ES6 Classes. The console.log() statements should still return what is expected of them.
 
 */
+
+/*
+Object oriented design is commonly used in video games.  For this part of the assignment you will be implementing several constructor functions with their correct inheritance hierarchy.
+
+In this file you will be creating three constructor functions: GameObject, CharacterStats, Humanoid.  
+
+At the bottom of this file are 3 objects that all end up inheriting from Humanoid.  Use the objects at the bottom of the page to test your constructor functions.
+
+Each constructor function has unique properties and methods that are defined in their block comments below:
+*/
+
+/*
+=== GameObject ===
+* createdAt
+* name
+* dimensions (These represent the character's size in the video game)
+* destroy() // prototype method that returns: `${this.name} was removed from the game.`
+*/
+
+// function GameObject (arr){
+//   this.createdAt = arr.createdAt;
+//   this.name = arr.name;
+//   this.dimensions = arr.dimensions;
+// };
+
+// GameObject.prototype.destroy = function(){
+//   return `${this.name} was removed from the game.`
+// };
+
+class GameObject {
+  constructor (created, name, dimensions){
+    this.createdAt = created;
+    this.name = name;
+    this.dimensions = dimensions;
+  };
+  
+  destroy() {
+    return `${this.name} was removed from the game.`;
+  };
+};
+
+/*
+=== CharacterStats ===
+* healthPoints
+* takeDamage() // prototype method -> returns the string '<object name> took damage.'
+* should inherit destroy() from GameObject's prototype
+*/
+
+// function CharacterStats (arr){
+//   GameObject.call(this, arr);
+//   this.healthPoints = arr.healthPoints;
+// };
+
+// CharacterStats.prototype = Object.create(GameObject.prototype);
+
+// CharacterStats.prototype.takeDamage = function(){
+//   return `${this.name} took damage.`
+// };
+
+class CharacterStats extends GameObject {
+  constructor (created, name, dimensions, health) {
+    super(created, name, dimensions);
+    this.healthPoints = health;
+  };
+  
+  takeDamage () {
+    return `${this.name} took damage.`
+  };
+};
+
+
+/*
+=== Humanoid (Having an appearance or character resembling that of a human.) ===
+* team
+* weapons
+* language
+* greet() // prototype method -> returns the string '<object name> offers a greeting in <object language>.'
+* should inherit destroy() from GameObject through CharacterStats
+* should inherit takeDamage() from CharacterStats
+*/
+
+// function Humanoid (arr){
+//   CharacterStats.call(this, arr);
+//   this.team = arr.team;
+//   this.weapons = arr.weapons;
+//   this.language = arr.language;
+// };
+
+// Humanoid.prototype = Object.create(CharacterStats.prototype);
+
+// Humanoid.prototype.greet = function () {
+//   return `${this.name} offers a greeting in ${this.language}.`;
+// };
+
+class Humanoid extends CharacterStats {
+  constructor (created, name, dimensions, health, team, weapons, language){
+    super(created, name, dimensions, health);
+    this.team = team;
+    this.weapons = weapons;
+    this.language = language;
+  };
+  
+  greet () {
+    return `${this.name} offers a greeting in ${this.language}.`;
+  };
+};
+
+/*
+* Inheritance chain: GameObject -> CharacterStats -> Humanoid
+* Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
+* Instances of CharacterStats should have all of the same properties as GameObject.
+*/
+
+// Test you work by un-commenting these 3 objects and the list of console logs below:
+
+
+const mage = new Humanoid(
+  new Date(),
+  'Bruce',
+  {
+    length: 2,
+    width: 1,
+    height: 1,
+  },
+  5,
+  'Mage Guild',
+  [
+    'Staff of Shamalama',
+  ],
+  'Common Tongue',
+  );
+  
+const swordsman = new Humanoid(
+  new Date(),
+  'Sir Mustachio',
+  {
+    length: 2,
+    width: 2,
+    height: 2,
+  },
+  15,
+  'The Round Table',
+  [
+    'Giant Sword',
+    'Shield',
+  ],
+  'Common Tongue',
+  );
+    
+const archer = new Humanoid(
+  new Date(),
+  'Lilith',
+  {
+    length: 1,
+    width: 2,
+    height: 4,
+  },
+  10,
+  'Forest Kingdom',
+  [
+    'Bow',
+    'Dagger',
+  ],
+  'Elvish',
+  );
+      
+      
+console.log(mage.createdAt); // Today's date
+console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
+console.log(swordsman.healthPoints); // 15
+console.log(mage.name); // Bruce
+console.log(swordsman.team); // The Round Table
+console.log(mage.weapons); // Staff of Shamalama
+console.log(archer.language); // Elvish
+console.log(archer.greet()); // Lilith offers a greeting in Elvish.
+console.log(mage.takeDamage()); // Bruce took damage.
+console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
+      
