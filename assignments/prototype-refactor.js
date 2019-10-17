@@ -37,10 +37,10 @@ Each constructor function has unique properties and methods that are defined in 
 // };
 
 class GameObject {
-  constructor (created, name, dimensions){
-    this.createdAt = created;
-    this.name = name;
-    this.dimensions = dimensions;
+  constructor (att){
+    this.createdAt = att.createdAt;
+    this.name = att.name;
+    this.dimensions = att.dimensions;
   };
   
   destroy() {
@@ -67,9 +67,9 @@ class GameObject {
 // };
 
 class CharacterStats extends GameObject {
-  constructor (created, name, dimensions, health) {
-    super(created, name, dimensions);
-    this.healthPoints = health;
+  constructor (att) {
+    super(att);
+    this.healthPoints = att.healthPoints;
   };
   
   takeDamage () {
@@ -102,11 +102,11 @@ class CharacterStats extends GameObject {
 // };
 
 class Humanoid extends CharacterStats {
-  constructor (created, name, dimensions, health, team, weapons, language){
-    super(created, name, dimensions, health);
-    this.team = team;
-    this.weapons = weapons;
-    this.language = language;
+  constructor (att){
+    super(att);
+    this.team = att.team;
+    this.weapons = att.weapons;
+    this.language = att.language;
   };
   
   greet () {
@@ -123,57 +123,57 @@ class Humanoid extends CharacterStats {
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
 
-const mage = new Humanoid(
-  new Date(),
-  'Bruce',
-  {
+const mage = new Humanoid({
+  createdAt: new Date(),
+  dimensions: {
     length: 2,
     width: 1,
     height: 1,
   },
-  5,
-  'Mage Guild',
-  [
+  healthPoints: 5,
+  name: 'Bruce',
+  team: 'Mage Guild',
+  weapons: [
     'Staff of Shamalama',
   ],
-  'Common Tongue',
-  );
-  
-const swordsman = new Humanoid(
-  new Date(),
-  'Sir Mustachio',
-  {
+  language: 'Common Tongue',
+});
+
+const swordsman = new Humanoid({
+  createdAt: new Date(),
+  dimensions: {
     length: 2,
     width: 2,
     height: 2,
   },
-  15,
-  'The Round Table',
-  [
+  healthPoints: 15,
+  name: 'Sir Mustachio',
+  team: 'The Round Table',
+  weapons: [
     'Giant Sword',
     'Shield',
   ],
-  'Common Tongue',
-  );
-    
-const archer = new Humanoid(
-  new Date(),
-  'Lilith',
-  {
+  language: 'Common Tongue',
+});
+
+const archer = new Humanoid({
+  createdAt: new Date(),
+  dimensions: {
     length: 1,
     width: 2,
     height: 4,
   },
-  10,
-  'Forest Kingdom',
-  [
+  healthPoints: 10,
+  name: 'Lilith',
+  team: 'Forest Kingdom',
+  weapons: [
     'Bow',
     'Dagger',
   ],
-  'Elvish',
-  );
-      
-      
+  language: 'Elvish',
+});
+
+
 console.log(mage.createdAt); // Today's date
 console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
 console.log(swordsman.healthPoints); // 15
@@ -184,4 +184,3 @@ console.log(archer.language); // Elvish
 console.log(archer.greet()); // Lilith offers a greeting in Elvish.
 console.log(mage.takeDamage()); // Bruce took damage.
 console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-      
